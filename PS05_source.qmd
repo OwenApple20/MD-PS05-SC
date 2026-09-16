@@ -238,14 +238,14 @@ Solve the regression equation for a state in which `trump_support` is "high".
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 10 Answers"}
-Your $LaTeX$ here
+$\hat{y}=0.191 + 0.2691111(0) + 0.0314(0)$
 
 ```{r}
 # Type your code and comments inside the code chunk
-
+(0.191 + 0.2691111*(0) + 0.0314*(0))
 ```
 
--   Delete this and put your text answer here.
+-   When a state has Trump support that is "high", the regression equations gives us 0.191 hate crimes per 100,000 people.
 :::
 
 ::: {.callout-note icon="false" title="Problem 11"}
@@ -257,10 +257,15 @@ Do these results surprise you? (There is no right answer to this question.)
 ::: {.callout-important icon="false" collapse="false" title="Problem 11 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+hate_crimes |>
+  select(hate_crimes, state) |>
+  arrange(desc(hate_crimes)) |>
+  filter(state != "District of Columbia") |>
+  head(n=5) |>
+  kable()
 ```
 
--   Delete this and put your text answer here.
+-   These results do surprise me because I thought there would be more crime like this in areas with the larger cities like New York and California.
 :::
 
 # Hate Crimes and Unemployment
