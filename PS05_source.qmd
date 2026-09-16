@@ -352,10 +352,10 @@ Use the `get_regression_points()` function to generate a table showing the fitte
 ::: {.callout-important icon="false" collapse="false" title="Problem 18 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+get_regression_points(job_mod)
 ```
 
--   Delete this and put your text answer here.
+-   Residuals are found through subtracting the actual number of hate crimes by the prediction `hate_crimes_hat`.
 :::
 
 # Hate Crimes and Household Income
