@@ -80,7 +80,7 @@ Create a visual model of these data (a graph) that will allow you to conduct an 
 ```{r}
 # Type your code and comments inside the code chunk
 ggplot(hate_crimes, aes(x = trump_support, y = hate_crimes, color = trump_support)) +
-  geom_boxplot(fill = "grey56") +
+  geom_boxplot(fill = "grey91") +
   labs(x = "Level of Trump Support", y = "Hate Crimes per 100 K individuals", title = "Hate crimes by Trump support level", color = "Trump Support") +
   theme_bw()
 ```
@@ -91,7 +91,7 @@ ggplot(hate_crimes, aes(x = trump_support, y = hate_crimes, color = trump_suppor
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 2 Answers"}
--   As the level of `trump_support` increases, the number of `hate_crimes` seems to generally decrease. This may be expected as the people in these areas would have been happier since the candidate they supported won the election. 
+-   As the level of `trump_support` increases, the number of `hate_crimes` seems to generally decrease. This may be expected as the people in these areas would have been happier since the candidate they supported won the election. After talking about it in class, I realized its more likely that areas that have low Trump support are urban areas, with more cultural a diversity. With more varying cultures in one area, it may be more likely for hate crimes happen between these groups.
 :::
 
 ::: {.callout-note icon="false" title="Problem 3"}
@@ -258,14 +258,15 @@ Do these results surprise you? (There is no right answer to this question.)
 ```{r}
 # Type your code and comments inside the code chunk
 hate_crimes |>
-  select(hate_crimes, state) |>
+  select(hate_crimes, state, trump_support) |>
   arrange(desc(hate_crimes)) |>
   filter(state != "District of Columbia") |>
-  head(n=5) |>
+  head(n=5) -> question11
+question11 |>
   kable()
 ```
 
--   These results do surprise me because I thought there would be more crime like this in areas with the larger cities like New York and California.
+-   The five states with the highest rate of hate crimes are `r  question11$state[1:4]`, and `r question11$state[5]`. These results do surprise me because I thought there would be more hate crime like this in areas with the larger cities like New York and California. I thought New York and California would also be in the top 5.
 :::
 
 # Hate Crimes and Unemployment
@@ -282,7 +283,10 @@ Create a visual model of this data (a graph) that will allow you to conduct an "
 ::: {.callout-important icon="false" collapse="false" title="Problem 12 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+ggplot(hate_crimes, aes(x = unemployment, y = hate_crimes, color = unemployment)) +
+  geom_boxplot(fill = "grey91") +
+  labs(x = "Level of Unemployment", y = "Hate Crimes per 100 K individuals", title = "Hate crimes by Unemployment level", color = "Unemployment Level") +
+  theme_bw()
 ```
 :::
 
@@ -293,7 +297,8 @@ Create a model that examines the relationship between hate crime rates and the u
 ::: {.callout-important icon="false" collapse="false" title="Problem 13 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+job_mod <- lm(hate_crimes ~ unemployment, data = hate_crimes)
+kable(get_regression_table(job_mod))
 ```
 :::
 
@@ -302,7 +307,7 @@ Write out the regression equation for `job_mod`.
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 14 Answers"}
-Write your equation with $LaTeX$ here.
+$\widehat{\text{Hate Crimes}} = 0.289 + 0.031 * (1_{\text{low unemployment}})$
 :::
 
 ::: {.callout-note icon="false" title="Problem 15"}
@@ -310,7 +315,7 @@ Interpret the estimate of the intercept from the table below.
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 15 Answers"}
--   Delete this and put your text answer here.
+-   The intercept is the mean amount of hate crimes per 100,000 people when the unemployment level is high. 
 :::
 
 ::: {.callout-note icon="false" title="Problem 16"}
@@ -320,10 +325,10 @@ What does the model estimate the number of hate crimes per 100,000 people to be 
 ::: {.callout-important icon="false" collapse="false" title="Problem 16 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+predict(job_mod, newdata = data.frame(unemployment = "low"))
 ```
 
--   Delete this and put your text answer here.
+-   The model estimates the number of hate crimes per 100,000 people in a state with "low" unemployment to be around `r round(predict(job_mod, newdata = data.frame(unemployment = "low")), digits = 4)`.
 :::
 
 ::: {.callout-note icon="false" title="Problem 17"}
@@ -333,10 +338,11 @@ What are the two possible fitted values $\widehat{y}$ for this model? Why are th
 ::: {.callout-important icon="false" collapse="false" title="Problem 17 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+predict(job_mod, newdata = data.frame(unemployment = "low"))
+predict(job_mod, newdata = data.frame(unemployment = "high"))
 ```
 
--   Delete this and put your text answer here.
+-   The two possible fitted values $\hat{y}$ for this model are `r round(predict(job_mod, newdata = data.frame(unemployment = "low")), digits = 4)` and `r round(predict(job_mod, newdata = data.frame(unemployment = "high")), digits = 4)`. There are only two of these compared to three because the character vector `unemployment` is only measured with the characters `low` and `high` instead of `low`, `medium`, and `high` like `trump_support`.
 :::
 
 ::: {.callout-note icon="false" title="Problem 18"}
