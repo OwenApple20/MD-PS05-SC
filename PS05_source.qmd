@@ -184,7 +184,7 @@ group_by(trump_support) |>
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 9 Answers"}
--   Delete this and put your text answer here.
+-   These numbers are the same as the three possible fitted values $\hat{y}$ for this model.
 :::
 
 ## The Regression Equation
