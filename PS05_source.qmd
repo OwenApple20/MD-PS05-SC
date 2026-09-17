@@ -407,7 +407,7 @@ get_regression_points(job_med_mod) |>
   filter(ID == 2)
 ```
 
--   Based on the data, the model has underpredicted the level of hate crime in Maine based on its median household income.
+-   Based on the data, the model has under-predicted the level of hate crime in Maine.
 :::
 
 # **EXTRA**
