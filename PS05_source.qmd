@@ -367,7 +367,10 @@ Create a model that examines the relationship between `hate_crimes` and median h
 ::: {.callout-important icon="false" collapse="false" title="Problem 19 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+# Type your code and comments inside the code chunk
+job_med_mod <- lm(hate_crimes ~ median_house_inc, data = hate_crimes)
+kable(get_regression_table(job_med_mod))
+summary(job_med_mod)
 ```
 :::
 
@@ -376,7 +379,7 @@ Were there more hate crimes in areas with high or low median household incomes? 
 :::
 
 ::: {.callout-important icon="false" collapse="false" title="Problem 20 Answers"}
--   Delete this and put your text answer here.
+-   There were more crimes in areas with a high median household income. The difference between states with "low" and "high" levels of household income is around 0.1604 hate crimes per 100,000 people.
 :::
 
 ::: {.callout-note icon="false" title="Problem 21"}
@@ -386,7 +389,7 @@ Show the first six rows of the output created from running the `get_regression_p
 ::: {.callout-important icon="false" collapse="false" title="Problem 21 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+kable(head(get_regression_points(job_med_mod)))
 ```
 :::
 
@@ -397,10 +400,14 @@ Take a look at data for Maine (row 2 of `hate_crimes`). Did the model (`job_med_
 ::: {.callout-important icon="false" collapse="false" title="Problem 22 Answers"}
 ```{r}
 # Type your code and comments inside the code chunk
-
+hate_crimes |>
+  filter(state == "Maine") |>
+  select(state, hate_crimes, median_house_inc)
+get_regression_points(job_med_mod) |>
+  filter(ID == 2)
 ```
 
--   Delete this and put your text answer here.
+-   Based on the data, the model has underpredicted the level of hate crime in Maine based on its median household income.
 :::
 
 # **EXTRA**
